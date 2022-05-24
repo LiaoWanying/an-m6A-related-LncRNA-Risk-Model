@@ -5,25 +5,25 @@ use XML::Simple;
 use Data::Dumper;
 
 
-my @dirs=glob("*");                                                      #»ñÈ¡ËùÓĞÄ¿Â¼
+my @dirs=glob("*");                                                      #è·å–æ‰€æœ‰ç›®å½•
 open(WF,">clinicalpractice.xls") or die $!;
 print WF "Id\tfutime\tfustat\tgender\tage\tstage\tT\tM\tN\tChild_pugh_classification\tGrade\tRace\tAFP_at_procurement\n";
-foreach my $dir(@dirs){                                                  #ÒÔÏÂÎªÅÀ³æ´¦Àí
-	if(-d $dir){                                                         #Èç¹ûÎªÄ¿Â¼ÏÂÎÄ¼şÔò´¦Àí
-	  opendir(RD,"$dir") or die $!;                                      #´ò¿ªÎÄ¼ş
+foreach my $dir(@dirs){                                                  #ä»¥ä¸‹ä¸ºçˆ¬è™«å¤„ç†
+	if(-d $dir){                                                         #å¦‚æœä¸ºç›®å½•ä¸‹æ–‡ä»¶åˆ™å¤„ç†
+	  opendir(RD,"$dir") or die $!;                                      #æ‰“å¼€æ–‡ä»¶
 	  while(my $xmlfile=readdir(RD)){
-	  	if($xmlfile=~/\.xml$/){                                          #ÅĞ¶ÏÊÇ·ñxmlÎÄ¼ş£¬ÊÇÔò¶ÁÈ¡
+	  	if($xmlfile=~/\.xml$/){                                          #åˆ¤æ–­æ˜¯å¦xmlæ–‡ä»¶ï¼Œæ˜¯åˆ™è¯»å–
 	  		#print "$dir\\$xmlfile\n";
 				my $userxs = XML::Simple->new(KeyAttr => "name");
 				my $userxml = $userxs->XMLin("$dir\\$xmlfile");
-				my $disease_code=$userxml->{'admin:admin'}{'admin:disease_code'}{'content'};   #ÌáÈ¡ÎÄ¼şĞÅÏ¢£¬get disease code
+				my $disease_code=$userxml->{'admin:admin'}{'admin:disease_code'}{'content'};   #æå–æ–‡ä»¶ä¿¡æ¯ï¼Œget disease code
 				my $disease_code_lc=lc($disease_code);
 				my $patient_key=$disease_code_lc . ':patient';                                #ucec:patient
 				my $follow_key=$disease_code_lc . ':follow_ups';
 				my $patient_barcode=$userxml->{$patient_key}{'shared:bcr_patient_barcode'}{'content'};  #TCGA-AX-A1CJ
-				my $gender=$userxml->{$patient_key}{'shared:gender'}{'content'};#ĞÔ±ğ
-				my $age=$userxml->{$patient_key}{'clin_shared:age_at_initial_pathologic_diagnosis'}{'content'};#ÄêÁä
-				my $race=$userxml->{$patient_key}{'clin_shared:race_list'}{'clin_shared:race'}{'content'};#ÈËÖÖ
+				my $gender=$userxml->{$patient_key}{'shared:gender'}{'content'};#æ€§åˆ«
+				my $age=$userxml->{$patient_key}{'clin_shared:age_at_initial_pathologic_diagnosis'}{'content'};#å¹´é¾„
+				my $race=$userxml->{$patient_key}{'clin_shared:race_list'}{'clin_shared:race'}{'content'};#äººç§
 				my $grade=$userxml->{$patient_key}{'shared:neoplasm_histologic_grade'}{'content'};  #G1/G2/G3				
 			    my $pathologic_stage=$userxml->{$patient_key}{'shared_stage:stage_event'}{'shared_stage:pathologic_stage'}{'content'};  #stage I
 				my $pathologic_T=$userxml->{$patient_key}{'shared_stage:stage_event'}{'shared_stage:tnm_categories'}{'shared_stage:pathologic_categories'}{'shared_stage:pathologic_T'}{'content'};
@@ -80,7 +80,7 @@ foreach my $dir(@dirs){                                                  #ÒÔÏÂÎª
 				  }
 				}
 				print WF "$patient_barcode\t$survivalTime\t$gender\t$age\t$pathologic_stage\t$pathologic_T\t$pathologic_M\t$pathologic_N\t$child_pugh_classification\t$grade\t$race\t$AFP\n";
-			}                        #ÉÏÒ»ĞĞ½«ËùÓĞĞÅÏ¢´òÓ¡³öÀ´
+			}                        #ä¸Šä¸€è¡Œå°†æ‰€æœ‰ä¿¡æ¯æ‰“å°å‡ºæ¥
 		}
 		close(RD);
 	}
