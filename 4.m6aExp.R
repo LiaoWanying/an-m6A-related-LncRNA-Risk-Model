@@ -3,12 +3,12 @@
 #BiocManager::install("limma")
 
 
-library(limma)            #ÒıÓÃ°ü
-expFile="symbol.txt"      #±í´ïÊäÈëÎÄ¼ş
-geneFile="gene.txt"       #»ùÒòÁĞ±íÎÄ¼ş
-setwd("C:\\m6AlncRNA\\08.m6aExp")    #ÉèÖÃ¹¤×÷Ä¿Â¼
+library(limma)            #å¼•ç”¨åŒ…
+expFile="symbol.txt"      #è¡¨è¾¾è¾“å…¥æ–‡ä»¶
+geneFile="gene.txt"       #åŸºå› åˆ—è¡¨æ–‡ä»¶
+setwd("C:\\m6AlncRNA\\08.m6aExp")    #è®¾ç½®å·¥ä½œç›®å½•
 
-#¶ÁÈ¡ÊäÈëÎÄ¼ş£¬²¢¶ÔÊı¾İ½øĞĞ´¦Àí
+#è¯»å–è¾“å…¥æ–‡ä»¶ï¼Œå¹¶å¯¹æ•°æ®è¿›è¡Œå¤„ç†
 rt=read.table(expFile, header=T, sep="\t", check.names=F)
 rt=as.matrix(rt)
 rownames(rt)=rt[,1]
@@ -18,11 +18,11 @@ data=matrix(as.numeric(as.matrix(exp)),nrow=nrow(exp),dimnames=dimnames)
 data=avereps(data)
 data=data[rowMeans(data)>0,]
 
-#»ñÈ¡m6a»ùÒòµÄ±í´ïÁ¿
+#è·å–m6aåŸºå› çš„è¡¨è¾¾é‡
 gene=read.table(geneFile, header=T, check.names=F, sep="\t")
 sameGene=intersect(as.vector(gene[,1]), rownames(data))
 geneExp=data[sameGene,]
 
-#Êä³ö½á¹û
+#è¾“å‡ºç»“æœ
 out=rbind(ID=colnames(geneExp),geneExp)
 write.table(out,file="m6aGeneExp.txt",sep="\t",quote=F,col.names=F)
