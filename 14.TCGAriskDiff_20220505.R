@@ -43,15 +43,15 @@ conNum=ncol(dataLow)
 treatNum=ncol(dataHigh)
 Type=c(rep(1,conNum),rep(2,treatNum))
 
-# 导入临床数据
+# 瀵煎叆涓村簥鏁版嵁
 risk[1:6,]
 data[1:6, 1:6]
 inFile <- "clinicalpractice.xls"
 samp=read.table(inFile,header=T,sep="\t",row.names=1,check.names=F)
 samp[1:6,]
 
-# high和low差异分析
-# Limma差异表达分析
+# high鍜宭ow宸紓鍒嗘瀽
+# Limma宸紓琛ㄨ揪鍒嗘瀽
 library(limma)
 eset <- data
 eset[1:6, 1:6]
