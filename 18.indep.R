@@ -50,7 +50,7 @@ bioForest=function(coxFile=null,forestFile=null,forestCol=null){
 }
 ############????ɭ??ͼ????############
 
-#??????��Ԥ??????????
+#??????��Ԥ??????????
 indep=function(riskFile=null,cliFile=null,uniOutFile=null,multiOutFile=null,uniForest=null,multiForest=null){
 	risk=read.table(riskFile, header=T, sep="\t", check.names=F, row.names=1)    #??ȡ?????ļ?
 	cli=read.table(cliFile, header=T, sep="\t", check.names=F, row.names=1)      #??ȡ?ٴ??ļ?
@@ -61,7 +61,7 @@ indep=function(riskFile=null,cliFile=null,uniOutFile=null,multiOutFile=null,uniF
 	cli=cli[sameSample,]
 	rt=cbind(futime=risk[,1], fustat=risk[,2], cli, riskScore=risk[,(ncol(risk)-1)])
 	
-	#?????ض?��Ԥ??????
+	#?????ض?��Ԥ??????
 	uniTab=data.frame()
 	for(i in colnames(rt[,3:ncol(rt)])){
 		 cox <- coxph(Surv(futime, fustat) ~ rt[,i], data = rt)
@@ -78,7 +78,7 @@ indep=function(riskFile=null,cliFile=null,uniOutFile=null,multiOutFile=null,uniF
 	bioForest(coxFile=uniOutFile, forestFile=uniForest, forestCol="green")
 	
 	
-	#?????ض?��Ԥ??????
+	#?????ض?��Ԥ??????
 	uniTab=uniTab[as.numeric(uniTab[,"pvalue"])<1,]
 	rt1=rt[,c("futime","fustat",as.vector(uniTab[,"id"]))]
 	multiCox=coxph(Surv(futime, fustat) ~ ., data = rt1)
@@ -94,7 +94,7 @@ indep=function(riskFile=null,cliFile=null,uniOutFile=null,multiOutFile=null,uniF
 	bioForest(coxFile=multiOutFile, forestFile=multiForest, forestCol="red")
 }
 
-#??��Ԥ??????
+#??��Ԥ??????
 indep(riskFile="trainRisk.txt",
       cliFile="clinical.txt",
       uniOutFile="train.uniCox.txt",
