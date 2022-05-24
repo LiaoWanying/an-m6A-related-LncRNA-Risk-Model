@@ -20,6 +20,6 @@
 19.Nomogram.R: establish a nomogram combined two independent risk factors, m6A-LPS and pathologic stage
 20.ROC曲线.R: ROC analysis to validate the nomogram in terms of its predictive accuracy
 21.Cplot.R: Calibration plots of nomogram
-23.TIDE.R: visualize the TIDE prediction scores
-24.IPS.R: Immunophenoscore of the high- and low-risk groups
-25.pRRophetic.R: IC50 of potential chemotherapeutic drugs
+22.TIDE.R: visualize the TIDE prediction scores
+23.IPS.R: Immunophenoscore of the high- and low-risk groups
+24.pRRophetic.R: IC50 of potential chemotherapeutic drugs
