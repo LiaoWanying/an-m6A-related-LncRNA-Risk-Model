@@ -20,3 +20,7 @@
 19.Nomogram.R
 20.ROC曲线.R
 21.Cplot.R
+22.checkpoint.R
+23.TIDE.R
+24.IPS.R
+25.pRRophetic.R
