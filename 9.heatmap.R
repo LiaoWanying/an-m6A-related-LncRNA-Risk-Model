@@ -28,7 +28,7 @@ data=matrix(as.numeric(as.matrix(exp)),nrow=nrow(exp),dimnames=dimnames)
 data=avereps(data)
 data=data[rowMeans(data)>0,]
 
-#??ȡԤ??lncRNA????��
+#??ȡԤ??lncRNA????��
 lncRNA=read.table(lncFile, header=T, sep="\t", check.names=F, row.names=1)
 data=data[colnames(lncRNA)[3:ncol(lncRNA)],]
 exp=data
