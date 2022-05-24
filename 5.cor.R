@@ -4,11 +4,11 @@
 
 
 library(limma)
-corFilter=0.4            #Ïà¹ØÏµÊı¹ıÂË±ê×¼
-pvalueFilter=0.001       #pÖµ¹ıÂË±ê×¼
-setwd("C:\\m6AlncRNA\\09.m6aLncExp")     #ÉèÖÃ¹¤×÷Ä¿Â¼
+corFilter=0.4            #ç›¸å…³ç³»æ•°è¿‡æ»¤æ ‡å‡†
+pvalueFilter=0.001       #på€¼è¿‡æ»¤æ ‡å‡†
+setwd("C:\\m6AlncRNA\\09.m6aLncExp")     #è®¾ç½®å·¥ä½œç›®å½•
 
-#¶ÁÈ¡lncRNA±í´ïÎÄ¼ş,²¢¶ÔÊı¾İ½øĞĞ´¦Àí
+#è¯»å–lncRNAè¡¨è¾¾æ–‡ä»¶,å¹¶å¯¹æ•°æ®è¿›è¡Œå¤„ç†
 rt=read.table("lncRNA.txt", header=T, sep="\t", check.names=F)
 rt=as.matrix(rt)
 rownames(rt)=rt[,1]
@@ -18,16 +18,16 @@ data=matrix(as.numeric(as.matrix(exp)),nrow=nrow(exp),dimnames=dimnames)
 data=avereps(data)
 data=data[rowMeans(data)>0.1,]
 
-#É¾µôÕı³£ÑùÆ·
+#åˆ æ‰æ­£å¸¸æ ·å“
 group=sapply(strsplit(colnames(data),"\\-"),"[",4)
 group=sapply(strsplit(group,""), "[", 1)
 group=gsub("2","1",group)
 lncRNA=data[,group==0]
-conNum=length(group[group==1])       #Õı³£×éÑùÆ·ÊıÄ¿
-treatNum=length(group[group==0])     #Ö×Áö×éÑùÆ·ÊıÄ¿
+conNum=length(group[group==1])       #æ­£å¸¸ç»„æ ·å“æ•°ç›®
+treatNum=length(group[group==0])     #è‚¿ç˜¤ç»„æ ·å“æ•°ç›®
 sampleType=c(rep(1,conNum), rep(2,treatNum))
 
-#¶ÁÈ¡m6a»ùÒò±í´ïÎÄ¼ş,²¢¶ÔÊı¾İ½øĞĞ´¦Àí
+#è¯»å–m6aåŸºå› è¡¨è¾¾æ–‡ä»¶,å¹¶å¯¹æ•°æ®è¿›è¡Œå¤„ç†
 rt1=read.table("m6aGeneExp.txt", header=T, sep="\t", check.names=F)
 rt1=as.matrix(rt1)
 rownames(rt1)=rt1[,1]
@@ -37,13 +37,13 @@ m6A=matrix(as.numeric(as.matrix(exp1)), nrow=nrow(exp1), dimnames=dimnames1)
 m6A=avereps(m6A)
 m6A=m6A[rowMeans(m6A)>0.1,]
 
-#É¾µôÕı³£ÑùÆ·
+#åˆ æ‰æ­£å¸¸æ ·å“
 group=sapply(strsplit(colnames(m6A),"\\-"),"[",4)
 group=sapply(strsplit(group,""),"[",1)
 group=gsub("2","1",group)
 m6A=m6A[,group==0]
 
-#Ïà¹ØĞÔ¼ìÑé
+#ç›¸å…³æ€§æ£€éªŒ
 outTab=data.frame()
 for(i in row.names(lncRNA)){
 	if(sd(lncRNA[i,])>0.1){
@@ -66,15 +66,15 @@ for(i in row.names(lncRNA)){
 	}
 }
 
-#Êä³öÏà¹ØĞÔÍøÂç
+#è¾“å‡ºç›¸å…³æ€§ç½‘ç»œ
 write.table(file="net.network.txt",outTab,sep="\t",quote=F,row.names=F)
-#Êä³öÏà¹ØĞÔ½ÚµãÊôĞÔ
+#è¾“å‡ºç›¸å…³æ€§èŠ‚ç‚¹å±æ€§
 lncNode=data.frame(Node=unique(as.vector(outTab[,"lncRNA"])), Type="lncRNA")
 mrnaNode=data.frame(Node=unique(as.vector(outTab[,"m6A"])), Type="m6A")
 nodeOut=rbind(lncNode, mrnaNode)
 write.table(nodeOut, file="net.node.txt", sep="\t", quote=F, row.names=F)
 
-#Êä³öm6aÏà¹ØlncRNA±í´ïÁ¿
+#è¾“å‡ºm6aç›¸å…³lncRNAè¡¨è¾¾é‡
 m6aLncRNA=unique(as.vector(outTab[,"lncRNA"]))
 m6aLncRNAexp=data[m6aLncRNA,]
 m6aLncRNAexp=rbind(ID=colnames(m6aLncRNAexp), m6aLncRNAexp)
