@@ -18,7 +18,7 @@
 17.volcanoV2.Rmd: visualize the DEGs
 18.indep.R: evaluate the independence of m6A-LPS in predicting overall survival (OS)
 19.Nomogram.R: establish a nomogram combined two independent risk factors, m6A-LPS and pathologic stage
-20.ROC曲线.R: ROC analysis to validate the nomogram in terms of its predictive accuracy
+20.ROC.R: ROC analysis to validate the nomogram in terms of its predictive accuracy
 21.Cplot.R: Calibration plots of nomogram
 22.TIDE.R: visualize the TIDE prediction scores
 23.IPS.R: Immunophenoscore of the high- and low-risk groups
